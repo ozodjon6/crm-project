@@ -90,6 +90,7 @@ export default {
     password: '',
     name: '',
     agree: false,
+    loading: true
   }),
   validations: {
     email: {email, required},
@@ -112,7 +113,8 @@ export default {
 
       try {
         await this.$store.dispatch('register', formData)
-        this.$router.push('/');
+        await this.$router.push('/');
+        this.loading = false
       } catch (e) {}
 
     }

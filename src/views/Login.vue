@@ -67,7 +67,8 @@ export default {
   name: "Login",
   data: () => ({
     email: '',
-    password: ''
+    password: '',
+    loading: true
   }),
   mounted() {
     if (message[this.$route.query.message]) {
@@ -91,6 +92,7 @@ export default {
       try {
         await this.$store.dispatch('login', formData);
         await this.$router.push('/');
+        this.loading = false
       } catch (e) {}
     }
   },
