@@ -5,7 +5,7 @@
         <h4>Создать</h4>
       </div>
 
-      <form @click.prevent="submitHandler">
+      <form @submit.prevent="submitHandler">
         <div class="input-field">
           <input
               id="name"
@@ -17,7 +17,9 @@
           <span
               v-if="$v.title.$dirty && !$v.title.required"
               class="helper-text invalid"
-          >Введите название категори</span>
+          >
+            Введите название категории
+          </span>
         </div>
 
         <div class="input-field">
@@ -31,7 +33,8 @@
           <span
               v-if="$v.limit.$dirty && !$v.limit.minValue"
               class="helper-text invalid"
-          >Минимальная значения {{$v.limit.$params.minValue.min}}
+          >
+            Минимальная значение {{ $v.limit.$params.minValue.min }}
           </span>
         </div>
 
@@ -48,17 +51,16 @@
 import {required, minValue} from 'vuelidate/lib/validators'
 
 export default {
-  name: "CategoryCreate",
   data: () => ({
     title: '',
     limit: 100
   }),
-  mounted() {
-    M.updateTextFields()
-  },
   validations: {
     title: {required},
     limit: {minValue: minValue(100)}
+  },
+  mounted() {
+    M.updateTextFields()
   },
   methods: {
     async submitHandler() {
@@ -72,17 +74,14 @@ export default {
           title: this.title,
           limit: this.limit
         })
-        this.title = '' 
+        this.title = ''
         this.limit = 100
         this.$v.$reset()
-        this.$message('Категорие была создана')
+        this.$message('Категория была создана')
         this.$emit('created', category)
-      } catch (e) {}
+      } catch (e) {
+      }
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

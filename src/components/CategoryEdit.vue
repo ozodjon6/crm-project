@@ -5,14 +5,15 @@
         <h4>Редактировать</h4>
       </div>
 
-      <form>
+      <form @submit.prevent="submitHandler">
         <div class="input-field">
           <select ref="select" v-model="current">
             <option
-                v-for="c in categories"
+                v-for="c of categories"
                 :key="c.id"
-                value="c.id"
-              >{{c.title}}</option>
+                :value="c.id"
+            >{{ c.title }}
+            </option>
           </select>
           <label>Выберите категорию</label>
         </div>
@@ -28,7 +29,9 @@
           <span
               v-if="$v.title.$dirty && !$v.title.required"
               class="helper-text invalid"
-          >Введите название категори</span>
+          >
+            Введите название категории
+          </span>
         </div>
 
         <div class="input-field">
@@ -42,7 +45,8 @@
           <span
               v-if="$v.limit.$dirty && !$v.limit.minValue"
               class="helper-text invalid"
-          >Минимальная значения {{$v.limit.$params.minValue.min}}
+          >
+            Минимальная значение {{ $v.limit.$params.minValue.min }}
           </span>
         </div>
 
@@ -56,7 +60,7 @@
 </template>
 
 <script>
-import {minValue, required} from "vuelidate/lib/validators";
+import {required, minValue} from 'vuelidate/lib/validators'
 
 export default {
   props: {
@@ -65,20 +69,21 @@ export default {
       required: true
     }
   },
-  name: "CategoryEdit",
   data: () => ({
     select: null,
     title: '',
     limit: 100,
     current: null
   }),
-  mounted() {
-    this.select = M.FormSelect.init(this.$refs.select);
-    M.updateTextFields()
+  validations: {
+    title: {required},
+    limit: {minValue: minValue(100)}
   },
   watch: {
-    current(value) {
-      console.log(value)
+    current(catId) {
+      const {title, limit} = this.categories.find(c => c.id === catId)
+      this.title = title
+      this.limit = limit
     }
   },
   created() {
@@ -87,18 +92,34 @@ export default {
     this.title = title
     this.limit = limit
   },
-  validations: {
-    title: {required},
-    limit: {minValue: minValue(100)}
+  methods: {
+    async submitHandler() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+
+      try {
+        const categoryData = {
+          id: this.current,
+          title: this.title,
+          limit: this.limit
+        }
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$message('Категория упешно обновлена')
+        this.$emit('updated', categoryData)
+      } catch (e) {
+      }
+    }
+  },
+  mounted() {
+    this.select = M.FormSelect.init(this.$refs.select)
+    M.updateTextFields()
   },
   destroyed() {
-    if (this.select && this.select.destroyed) {
-      this.select.destroyed()
+    if (this.select && this.select.destroy) {
+      this.select.destroy()
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

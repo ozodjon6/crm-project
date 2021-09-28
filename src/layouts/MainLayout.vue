@@ -10,7 +10,10 @@
       </main>
 
       <div class="fixed-action-btn">
-        <router-link to="/record" class="btn-floating btn-large blue">
+        <router-link to="/record"
+                     class="btn-floating btn-large blue"
+                     v-tooltip="'Создать'"
+                      data-position="top">
           <i class="large material-icons">add</i>
         </router-link>
       </div>
@@ -22,6 +25,7 @@
 
 import Navbar from "@/components/app/Navbar";
 import Sidebar from "@/components/app/Sidebar";
+import message from "@/utils/message";
 
 export default {
   name: "MainLayout",
@@ -39,6 +43,16 @@ export default {
   components: {
     Navbar,
     Sidebar
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(fbError) {
+      this.$error(message[fbError.code] || 'Что-то пошоль так');
+    }
   }
 }
 </script>

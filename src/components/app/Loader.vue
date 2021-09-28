@@ -1,5 +1,5 @@
 <template>
-  <div class="app-laoder">
+  <div class="app-loader">
     <div class="preloader-wrapper active" :class="loader">
       <div class="spinner-layer">
         <div class="circle-clipper left">
@@ -31,7 +31,7 @@ export default {
 
 <style scoped>
 
-.app-laoder {
+.app-loader {
   position: absolute;
   top: 50%;
   left: 50%;

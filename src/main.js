@@ -3,9 +3,11 @@ import App from './App.vue'
 import {Vuelidate} from "vuelidate";
 import './registerServiceWorker'
 import router from './router'
+import VueRouter from "vue-router";
 import dateFilter from "@/filters/date.filter";
 import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from '@/utils/message.plugn'
+import tooltipDirective from '@/directives/tooltip.directive'
 import store from './store'
 import Loader from "@/components/app/Loader";
 import 'materialize-css/dist/js/materialize.min'
@@ -30,15 +32,17 @@ Vue.component('Loader', Loader);
 
 Vue.use(messagePlugin)
 Vue.use(Vuelidate);
+Vue.use(VueRouter)
 
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter)
+Vue.directive('tooltip', tooltipDirective)
 
 let app;
 
 firebase.auth().onAuthStateChanged( () => {
   if (!app) {
-    new Vue({
+   app = new Vue({
       router,
       store,
       render: h => h(App)
