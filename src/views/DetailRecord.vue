@@ -5,7 +5,7 @@
       <div class="breadcrumb-wrap">
         <router-link to="/history" class="breadcrumb">История</router-link>
         <a @click.prevent="" class="breadcrumb">
-          {{record.type === 'income' ? 'Доход' : 'Расход'}}
+          {{ record.type === 'income' ? 'Доход' : 'Расход' }}
         </a>
       </div>
       <div class="row">
@@ -13,17 +13,17 @@
           <div class="card" :class="{'red' : record.type === 'outcome',
                                     'green' : record.type === 'income'}">
             <div class="card-content white-text">
-              <p>Описание: {{record.description}}</p>
-              <p>Сумма: {{record.amount | currency}}</p>
-              <p>Категория: {{record.categoryName}}</p>
+              <p>Описание: {{ record.description }}</p>
+              <p>Сумма: {{ record.amount | currency }}</p>
+              <p>Категория: {{ record.categoryName }}</p>
 
-              <small>{{record.date | date('datetime')}}</small>
+              <small>{{ record.date | date('datetime') }}</small>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <p class="center" v-else>Пока запись id={{$route.params.id}} не найдено</p>
+    <p class="center" v-else>Пока запись id={{ $route.params.id }} не найдено</p>
   </div>
 </template>
 

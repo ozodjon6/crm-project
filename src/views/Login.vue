@@ -63,6 +63,7 @@
 <script>
 import {email, required, minLength } from 'vuelidate/lib/validators'
 import message from "@/utils/message";
+
 export default {
   name: "Login",
   data: () => ({

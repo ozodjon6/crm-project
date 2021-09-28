@@ -8,8 +8,7 @@
       <th>Категория</th>
       <th>Тип</th>
       <th>Открыть</th>
-    </tr>
-    </thead>
+    </tr>   </thead>
 
     <tbody>
     <tr v-for="(record, index) of records" :key="record.id">
