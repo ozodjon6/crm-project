@@ -6,7 +6,7 @@
 
 <script>
 import message from "@/utils/message";
-
+import localizeFilter from "@/filters/localize.filter";
 export default {
   name: "EmptyLayout",
   computed: {

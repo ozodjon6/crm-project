@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @click.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">{{'HomeBookkeeping' | localize}}</span>
       <div class="input-field">
         <input
             id="email"
@@ -9,16 +9,16 @@
             v-model.trim="email"
             :class="{invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email)}"
         >
-        <label for="email">Email</label>
+        <label for="email">{{'Email' | localize}}</label>
         <small
             class="helper-text invalid"
             v-if="$v.email.$dirty && !$v.email.required"
-            >Поле не дольжно быт пустим
+            >{{'FieldNotEmpty' | localize}}
         </small>
         <small
             class="helper-text invalid"
             v-else-if="$v.email.$dirty && !$v.email.email"
-        >Ввидите корректный email
+        >{{'EnterValidEmail' | localize}}
         </small>
       </div>
       <div class="input-field">
@@ -63,9 +63,15 @@
 <script>
 import {email, required, minLength } from 'vuelidate/lib/validators'
 import message from "@/utils/message";
+import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: "Login",
+  metaInfo() {
+    return {
+      title: this.$title('Login')
+    }
+  },
   data: () => ({
     email: '',
     password: '',
@@ -73,7 +79,7 @@ export default {
   }),
   mounted() {
     if (message[this.$route.query.message]) {
-      this.$message(message[this.$route.query.message])
+      this.$message(localizeFilter(message[this.$route.query.message]))
     }
   },
   validations: {

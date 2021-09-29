@@ -5,8 +5,11 @@ import './registerServiceWorker'
 import router from './router'
 import Paginate from 'vuejs-paginate'
 import VueRouter from "vue-router";
+import VueMeta from "vue-meta";
 import dateFilter from "@/filters/date.filter";
 import currencyFilter from "@/filters/currency.filter";
+import localizeFilter from "@/filters/localize.filter"
+import titlePlugin from '@/utils/title.plugin'
 import messagePlugin from '@/utils/message.plugn'
 import tooltipDirective from '@/directives/tooltip.directive'
 import store from './store'
@@ -34,9 +37,12 @@ Vue.component('Loader', Loader);
 Vue.use(messagePlugin)
 Vue.use(Vuelidate);
 Vue.use(VueRouter)
+Vue.use(VueMeta)
+Vue.use(titlePlugin)
 
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter)
+Vue.filter('localize', localizeFilter)
 Vue.directive('tooltip', tooltipDirective)
 Vue.component('Paginate', Paginate)
 
